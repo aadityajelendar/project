@@ -1,0 +1,130 @@
+{% load  staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        my site
+    </title>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #753;
+}
+
+li {
+    float:right;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+</style>
+
+</head>
+<body bgcolor="gray">
+<ul>
+<li class="dropdown">
+  <a href="javascript:void(0)" class="dropbtn">cart</a>
+   <div class="dropdown-content">
+      <a href="{% url 'cart' %}">view cart</a>
+	  
+   </div>
+  </li>
+<li class="dropdown">
+  <a href="javascript:void(0)" class="dropbtn">SignUp</a>
+   <div class="dropdown-content">
+      <a href="{% url 'signup' %}" target="_blank">reg</a>
+	  <a href="{% url 'login' %}">login</a>
+   </div>
+  </li>
+   <li class="dropdown">
+  <a href="javascript:void(0)" class="dropbtn">orders</a>
+   <div class="dropdown-content">
+      <a href="{% url 'track' %}" target="_blank">track order</a>
+	  <a href="{% url 'cancel' %}">cancel order</a>
+   </div>
+  </li> 
+ </ul>
+ <div style="background-color:lightblue">
+<form action="" method="post">
+ {% csrf_token %}
+ <center><input type="text" name="dt" placeholder="enter product name or id">
+ <select name = "drop1" >
+ <option value="pn">pname</option/>
+ <option value="pi">pid</option>-
+                    
+</select><br>
+ <input type="submit" value="search">
+  </center>
+
+ </form>
+ </div>
+<marquee  behavior="scroll" scrollamount="15"><b style="color:red;font-size: 20px">WELCOME TO MYMART</b></marquee>
+<div style="width: 100%;">
+    <div style="float:left; width: 80%">
+	sort product based on price
+    </div>
+    <div style="float:right;">
+	<table border="1">
+<tr >
+  <th>pid</th>
+  <th>pname</th>
+  <th>pcost</th>
+    <th>pmfdt</th>
+    <th>pexpdt</th>
+</tr>
+{% for rec in records %}
+<tr>
+  <td>{{ rec.pid }}</td>
+  <td>{{ rec.pname }}</td>
+  <td>{{ rec.pcost }}</td>
+  <td>{{ rec.pmfdt }}</td>
+  <td>{{ rec.pexpdt }}</td>
+  <td><a href="addcart?pid={{rec.pid}}">add to cart</a></td>
+</tr>
+{% endfor %}
+</table>
+    </div>
+</div>
+</body>
+</html>
+
